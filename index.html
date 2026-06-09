@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sethowa CRO — Free Shopify Email Audit</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a1a0f;
+  --surface:#0f2416;
+  --border:#1a3a22;
+  --gold:#c8a84b;
+  --text:#f0ece4;
+  --muted:#7a8f7e;
+  --accent:#e8f540;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  padding:20px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(10,26,15,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+}
+.nav-logo span{color:var(--gold)}
+.nav-cta{
+  background:var(--gold);
+  color:#0a1a0f;
+  padding:10px 24px;
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  text-decoration:none;
+  letter-spacing:0.05em;
+  transition:opacity 0.2s;
+}
+.nav-cta:hover{opacity:0.85}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:120px 40px 80px;
+  max-width:900px;
+  margin:0 auto;
+  position:relative;
+}
+.hero-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid rgba(200,168,75,0.3);
+  padding:6px 14px;
+  margin-bottom:32px;
+  width:fit-content;
+  opacity:0;
+  animation:fadeUp 0.6s 0.1s ease forwards;
+}
+.hero-tag::before{
+  content:'';
+  width:6px;height:6px;
+  background:var(--gold);
+  border-radius:50%;
+  flex-shrink:0;
+}
+h1{
+  font-size:clamp(48px,8vw,96px);
+  font-weight:800;
+  line-height:0.95;
+  letter-spacing:-2px;
+  margin-bottom:32px;
+  opacity:0;
+  animation:fadeUp 0.6s 0.2s ease forwards;
+}
+h1 .line2{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-weight:400;
+  color:var(--gold);
+  display:block;
+}
+h1 .line3{
+  display:block;
+  -webkit-text-stroke:1.5px var(--text);
+  color:transparent;
+}
+.hero-sub{
+  font-size:18px;
+  color:var(--muted);
+  max-width:520px;
+  line-height:1.7;
+  margin-bottom:48px;
+  opacity:0;
+  animation:fadeUp 0.6s 0.3s ease forwards;
+}
+.hero-sub strong{color:var(--text);font-weight:700}
+.hero-actions{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  opacity:0;
+  animation:fadeUp 0.6s 0.4s ease forwards;
+}
+.btn-primary{
+  background:var(--gold);
+  color:#0a1a0f;
+  padding:16px 36px;
+  font-family:'Syne',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  text-decoration:none;
+  letter-spacing:0.03em;
+  transition:opacity 0.2s,transform 0.2s;
+  display:inline-block;
+}
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-secondary{
+  border:1px solid var(--border);
+  color:var(--muted);
+  padding:16px 36px;
+  font-family:'Syne',sans-serif;
+  font-size:15px;
+  font-weight:400;
+  text-decoration:none;
+  transition:border-color 0.2s,color 0.2s;
+  display:inline-block;
+}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+.hero-stat{
+  margin-top:64px;
+  display:flex;
+  gap:48px;
+  flex-wrap:wrap;
+  opacity:0;
+  animation:fadeUp 0.6s 0.5s ease forwards;
+  padding-top:48px;
+  border-top:1px solid var(--border);
+}
+.stat-item .num{
+  font-size:36px;
+  font-weight:800;
+  color:var(--gold);
+  letter-spacing:-1px;
+  line-height:1;
+  margin-bottom:4px;
+}
+.stat-item .label{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* SECTIONS */
+section{
+  padding:96px 40px;
+  max-width:900px;
+  margin:0 auto;
+  border-top:1px solid var(--border);
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.5s ease,transform 0.5s ease;
+}
+section.visible{opacity:1;transform:translateY(0)}
+.section-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:24px;
+}
+h2{
+  font-size:clamp(32px,5vw,52px);
+  font-weight:800;
+  letter-spacing:-1.5px;
+  line-height:1;
+  margin-bottom:24px;
+}
+h2 em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-weight:400;
+  color:var(--gold);
+}
+
+/* PROBLEM */
+.problem-text{
+  font-size:20px;
+  line-height:1.7;
+  color:var(--muted);
+  max-width:640px;
+  margin-bottom:40px;
+}
+.problem-text strong{color:var(--text)}
+.quote-block{
+  border-left:3px solid var(--gold);
+  padding:24px 32px;
+  background:var(--surface);
+  margin-top:32px;
+}
+.quote-block p{
+  font-family:'Instrument Serif',serif;
+  font-size:20px;
+  font-style:italic;
+  color:var(--text);
+  line-height:1.6;
+}
+
+/* FLOWS */
+.flows{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--border);
+  margin-top:48px;
+  border:1px solid var(--border);
+}
+.flow-card{
+  background:var(--bg);
+  padding:32px 28px;
+  position:relative;
+  overflow:hidden;
+  transition:background 0.2s;
+}
+.flow-card:hover{background:var(--surface)}
+.flow-card::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:var(--gold);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.3s ease;
+}
+.flow-card:hover::after{transform:scaleX(1)}
+.flow-num{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:rgba(200,168,75,0.5);
+  letter-spacing:0.1em;
+  margin-bottom:20px;
+}
+.flow-name{
+  font-size:18px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:-0.3px;
+  margin-bottom:12px;
+}
+.flow-desc{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:20px;
+}
+.flow-result{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--gold);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+
+/* HOW IT WORKS */
+.steps{display:flex;flex-direction:column;gap:0;margin-top:48px}
+.step{
+  display:grid;
+  grid-template-columns:64px 1fr;
+  gap:24px;
+  padding:32px 0;
+  border-bottom:1px solid var(--border);
+  align-items:start;
+}
+.step:last-child{border-bottom:none}
+.step-num{
+  font-size:40px;
+  font-weight:800;
+  color:var(--border);
+  line-height:1;
+  padding-top:4px;
+}
+.step-content h3{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+.step-content p{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.step-content .tag{
+  display:inline-block;
+  margin-top:12px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid rgba(200,168,75,0.3);
+  padding:3px 10px;
+}
+
+/* OFFER */
+.offer-box{
+  background:var(--surface);
+  border:1px solid var(--gold);
+  padding:48px;
+  margin-top:48px;
+  position:relative;
+  overflow:hidden;
+}
+.offer-box::before{
+  content:'FREE';
+  position:absolute;
+  right:-20px;top:20px;
+  font-size:120px;
+  font-weight:800;
+  color:rgba(200,168,75,0.05);
+  letter-spacing:-4px;
+  pointer-events:none;
+}
+.offer-title{
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:8px;
+  letter-spacing:-0.5px;
+}
+.offer-subtitle{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-size:18px;
+  color:var(--gold);
+  margin-bottom:32px;
+}
+.offer-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:40px;
+}
+.offer-list li{
+  font-size:15px;
+  color:var(--muted);
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+.offer-list li::before{
+  content:'✓';
+  color:var(--gold);
+  font-weight:700;
+  flex-shrink:0;
+  margin-top:1px;
+}
+.offer-list li strong{color:var(--text)}
+.offer-note{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-top:24px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+}
+
+/* TRUST */
+.trust-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:48px;
+}
+.trust-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:28px;
+  transition:border-color 0.2s;
+}
+.trust-card:hover{border-color:rgba(200,168,75,0.4)}
+.trust-card .trust-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:12px;
+}
+.trust-card p{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.trust-card p strong{color:var(--text)}
+
+/* CTA SECTION */
+.cta-section{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:96px 40px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.5s ease,transform 0.5s ease;
+}
+.cta-section.visible{opacity:1;transform:translateY(0)}
+.cta-eyebrow{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-size:18px;
+  color:var(--gold);
+  margin-bottom:16px;
+}
+.cta-section h2{
+  font-size:clamp(36px,6vw,72px);
+  font-weight:800;
+  letter-spacing:-2px;
+  line-height:0.95;
+  margin-bottom:24px;
+  max-width:700px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.cta-section h2 em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-weight:400;
+  color:var(--gold);
+}
+.cta-sub{
+  font-size:16px;
+  color:var(--muted);
+  margin-bottom:40px;
+  max-width:420px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.cta-email{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:var(--muted);
+  margin-top:20px;
+  letter-spacing:0.1em;
+}
+
+/* FOOTER */
+footer{
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+}
+footer .footer-logo{
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+}
+footer .footer-logo span{color:var(--gold)}
+footer .footer-links{
+  display:flex;
+  gap:24px;
+}
+footer .footer-links a{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+footer .footer-links a:hover{color:var(--gold)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  nav{padding:16px 20px}
+  .hero{padding:100px 20px 60px}
+  h1{letter-spacing:-1px}
+  .hero-stat{gap:32px}
+  section{padding:64px 20px}
+  .flows{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr}
+  .offer-box{padding:32px 24px}
+  .cta-section{padding:64px 20px}
+  footer{padding:32px 20px;flex-direction:column;align-items:flex-start}
+  .hero-actions{flex-direction:column}
+  .btn-primary,.btn-secondary{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Sethowa <span>CRO</span></div>
+  <a href="https://calendly.com/sethowacro" target="_blank" class="nav-cta">Book Free Audit</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Free offer — limited spots</div>
+  <h1>
+    Your store gets traffic.
+    <span class="line2">Where are the sales?</span>
+  </h1>
+  <p class="hero-sub">
+    <strong>70% of shoppers abandon their cart</strong> without buying. Without email automation, they're gone forever. I set up Klaviyo flows that recover those lost sales — automatically, while you sleep.
+  </p>
+  <div class="hero-actions">
+    <a href="https://calendly.com/sethowacro" target="_blank" class="btn-primary">Book Your Free Audit →</a>
+    <a href="#how-it-works" class="btn-secondary">See how it works</a>
+  </div>
+  <div class="hero-stat">
+    <div class="stat-item">
+      <div class="num">70%</div>
+      <div class="label">Average cart abandonment</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">$36</div>
+      <div class="label">Return per $1 on email</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">15–20%</div>
+      <div class="label">Revenue recovered by flows</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-eyebrow">The real problem</div>
+  <h2>Traffic isn't your<br><em>problem.</em></h2>
+  <p class="problem-text">
+    Most Shopify store owners spend money on ads, get visitors, and watch them leave — never to return. The store looks fine. The product is good. But nobody's buying.
+  </p>
+  <p class="problem-text">
+    The missing piece is almost always the same: <strong>no automated follow-up.</strong> No abandoned cart email. No welcome sequence. No post-purchase flow. Just silence after every visit.
+  </p>
+  <div class="quote-block">
+    <p>"I won't give you general answers. I'll sit with you until we see a result."</p>
+  </div>
+</section>
+
+<!-- FLOWS -->
+<section id="flows">
+  <div class="section-eyebrow">What I build for you</div>
+  <h2>Three flows.<br><em>One system.</em></h2>
+  <div class="flows">
+    <div class="flow-card">
+      <div class="flow-num">FLOW 01</div>
+      <div class="flow-name">Abandoned Cart</div>
+      <p class="flow-desc">Sent automatically when someone adds to cart but doesn't buy. Highest ROI flow in ecom. Recovers shoppers who were ready to buy but got distracted.</p>
+      <div class="flow-result">→ Recovers 5–15% of lost carts</div>
+    </div>
+    <div class="flow-card">
+      <div class="flow-num">FLOW 02</div>
+      <div class="flow-name">Welcome Sequence</div>
+      <p class="flow-desc">Sent when someone joins your email list. Introduces your brand, builds trust, and drives the first purchase before they forget who you are.</p>
+      <div class="flow-result">→ Converts cold leads to buyers</div>
+    </div>
+    <div class="flow-card">
+      <div class="flow-num">FLOW 03</div>
+      <div class="flow-name">Post-Purchase</div>
+      <p class="flow-desc">Sent after every sale. Builds loyalty, drives repeat purchases, and generates reviews automatically — turning one-time buyers into regulars.</p>
+      <div class="flow-result">→ Increases lifetime value</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="section-eyebrow">The process</div>
+  <h2>Simple.<br><em>Honest.</em> Fast.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Book a free 20-minute call</h3>
+        <p>We look at your store together. I ask about your products, your customers, and where you're losing sales. No pitch — just a genuine look at what's happening.</p>
+        <span class="tag">No commitment required</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>I build your flows</h3>
+        <p>I set up Klaviyo, integrate it with your Shopify store, and build your email flows with custom copy written specifically for your brand. Delivered in 5–10 days.</p>
+        <span class="tag">Done with you — not for you</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Your flows go live — and work</h3>
+        <p>Every flow is tested and live before I hand it over. From that moment, every abandoned cart, every new subscriber, every purchase triggers an automated follow-up.</p>
+        <span class="tag">Runs on autopilot forever</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE OFFER -->
+<section id="offer">
+  <div class="section-eyebrow">Limited free offer</div>
+  <h2>Get your first<br><em>audit free.</em></h2>
+  <div class="offer-box">
+    <div class="offer-title">Free Shopify Email Flow Audit</div>
+    <div class="offer-subtitle">I review your store and tell you exactly what's missing</div>
+    <ul class="offer-list">
+      <li><strong>Full store review</strong> — I look at your Shopify store, your traffic sources, and your current email setup</li>
+      <li><strong>Specific diagnosis</strong> — I tell you exactly which flows are missing and what they're costing you in lost revenue</li>
+      <li><strong>No generic advice</strong> — every observation is specific to your store, your niche, and your customers</li>
+      <li><strong>No obligation</strong> — you walk away with a clear picture of what to fix, whether you work with me or not</li>
+    </ul>
+    <a href="https://calendly.com/sethowacro" target="_blank" class="btn-primary">Book Your Free Audit →</a>
+    <div class="offer-note">Limited to 3 free audits per week · 20 minutes · Via Google Meet or Zoom</div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust">
+  <div class="section-eyebrow">Why work with me</div>
+  <h2>Real experience.<br><em>Honest work.</em></h2>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-label">Lived the pain</div>
+      <p>I've run Shopify stores myself. I know what it feels like to have <strong>traffic with no sales</strong>, add-to-carts that don't convert, and ads that drain your budget. That's not textbook — that's real.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-label">No templates</div>
+      <p>Every flow I build is written specifically for your brand, your products, and your customers. <strong>No copy-paste sequences</strong> that sound like every other store in your niche.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-label">Done-with-you</div>
+      <p>I don't disappear after delivery. I sit with you, explain what I'm building and why, and <strong>make sure it's working</strong> before I hand it over.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-label">Honest pricing</div>
+      <p>Starting from $45 for a single flow. No agency markup. No retainer you don't need yet. <strong>Pay for what solves your problem</strong> — nothing more.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="cta">
+  <div class="cta-eyebrow">Ready to stop losing sales?</div>
+  <h2>Book your free<br><em>audit today.</em></h2>
+  <p class="cta-sub">20 minutes. No pitch. Just an honest look at what's stopping your store from converting.</p>
+  <a href="https://calendly.com/sethowacro" target="_blank" class="btn-primary">Book Free Audit →</a>
+  <div class="cta-email">Or email directly: sethowacro@gmail.com</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Sethowa <span>CRO</span></div>
+  <div class="footer-links">
+    <a href="https://www.fiverr.com/lesedi_sethowa/set-up-your-klaviyo-abandoned-cart-and-welcome-email-flows-for-shopify" target="_blank">Fiverr</a>
+    <a href="mailto:sethowacro@gmail.com">Email</a>
+    <a href="https://calendly.com/sethowacro" target="_blank">Book a call</a>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) entry.target.classList.add('visible');
+  });
+},{threshold:0.1});
+document.querySelectorAll('section, .cta-section').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
